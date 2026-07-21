@@ -50,6 +50,19 @@ app.post("/students", (req, res) => {
     res.status(201).json(student);
 });
 
+// Added a middleware to handle invalid JSON during test cases
+/* 
+    app.use((err, req, res, next) => {
+        if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+            return res.status(400).json({
+                message: "Invalid JSON format."
+            });
+        }
+
+        next(err);
+    });
+*/
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
