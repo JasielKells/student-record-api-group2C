@@ -19,8 +19,8 @@ app.get("/students", (req, res) => {
         return res.status(202).json({
             message: "No students found.",
             count: 0,
-            timestamp: new Date().toISOString,
-            students: []
+            timestamp: new Date().toISOString(),
+            students
         });
     }
 
@@ -28,7 +28,7 @@ app.get("/students", (req, res) => {
         message: "Students retrieved successfully.",
         count: students.length,
         timestamp: new Date().toISOString(),
-        student
+        students
     });
 });
 
