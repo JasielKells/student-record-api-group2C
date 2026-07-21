@@ -5,6 +5,7 @@ const port = 3000;
 
 app.use(express.json());
 
+// Sample student data (temporary in-memory database)
 let students = [
     {
         id: 1,
@@ -14,10 +15,23 @@ let students = [
     }
 ];
 
-
+/*
+ * GET /students
+ * Retrieves all student records.
+ *
+ * Improvements added:
+ * - Returns a message describing the result.
+ * - Returns the total number of students.
+ * - Includes a timestamp showing when the response was generated.
+ * - Handles the case where no student records exist.
+ */
 app.get("/students", (req, res) => {
+
+    // Check if the students array is empty
     if (students.length === 0) {
-        return res.status(202).json({
+
+        // Return an informative response instead of an empty array only
+        return res.status(200).json({
             message: "No students found.",
             count: 0,
             timestamp: new Date().toISOString(),
@@ -25,6 +39,7 @@ app.get("/students", (req, res) => {
         });
     }
 
+    // Return all student records with additional metadata
     res.status(200).json({
         message: "Students retrieved successfully.",
         count: students.length,
