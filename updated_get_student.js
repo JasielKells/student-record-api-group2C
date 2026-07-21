@@ -15,7 +15,21 @@ let students = [
 ];
 
 app.get("/students", (req, res) => {
-    res.status(200).json(students);
+    if (students.length === 0) {
+        return res.status(202).json({
+            message: "No students found.",
+            count: 0,
+            timestamp: new Date().toISOString,
+            students: []
+        });
+    }
+
+    res.status(200).json({
+        message: "Students retrieved successfully.",
+        count: students.length,
+        timestamp: new Date().toISOString(),
+        student
+    });
 });
 
 app.listen(port, () => {
