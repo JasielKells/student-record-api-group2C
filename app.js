@@ -37,9 +37,7 @@ app.patch('/students/:id', (req, res) => {
 app.delete('/students/:id', (req, res) => { 
     const id = parseInt(req.params.id);
     const initialList = studentList.length;
-    console.log(initialList)
     const student = studentList.filter((student) => student.id !== id)
-    console.log(student)
     if(student.length === initialList) {
         return res.status(404).json({error: "Student not found"});
     }
