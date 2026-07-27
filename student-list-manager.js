@@ -81,14 +81,16 @@ app.post("/students", (req, res) => {
     const { name, course, age } = req.body;
 
     // Check that all required fields are provided
-    if (!name.trim() || !course.trim() || age === undefined) {
+    if (!name || !name.trim() || !course || !course.trim() || age === undefined || age === null || age === "") {
         return res.status(400).json({
             message: "Name, course and age are required."
         });
     }
 
-    // Validate that the age is a positive number
-    if (typeof age !== "number" || age <= 0) {
+    const ageNum = Number(age);
+
+    // Validate that age is a positive number
+    if (!Number.isInteger(ageNum) || ageNum <= 0) {
         return res.status(400).json({
             message: "Age must be a positive number greater than zero."
         });
