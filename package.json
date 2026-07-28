@@ -4,6 +4,8 @@
   "description": "Developing an API to manage a list of students. Implement endpoints to add, view, edit and remove students records.",
   "main": "index.js",
   "scripts": {
+    "start": "node student-list-manager.js",
+    "dev": "nodemon student-list-manager.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/JasielKells/student-record-api-group2C#readme",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1"
   },
   "devDependencies": {

@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 
-const port = 3000;
-
 app.use(express.json());
 
 // Sample student data (temporary in-memory database)
@@ -185,19 +183,22 @@ app.delete("/students/:id", (req, res) => {
 });
 
 // Added a middleware to handle invalid JSON during test cases
-/* 
-    app.use((err, req, res, next) => {
-        if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
-            return res.status(400).json({
-                message: "Invalid JSON format."
-            });
-        }
+app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+        return res.status(400).json({
+            message: "Invalid JSON format."
+        });
+    }
 
-        next(err);
-    });
-*/
+    next(err);
+});
 
+app.use((err, req, res, next) => {
+    res.status(500).json({ error: "Server error!" });
+});
+
+const port = process.env.port || 3000;
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on ${port}`);
 });
