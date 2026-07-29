@@ -1,5 +1,8 @@
 const express = require("express");
+require("dotenv").config();
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -10,6 +13,12 @@ let students = [
         name: "Benjamin",
         course: "Cloud Computing",
         age: 22
+    },
+    {
+        id: 2,
+        name: "James",
+        course: "Game Development",
+        age: 25
     }
 ];
 
@@ -44,6 +53,9 @@ app.get("/students", (req, res) => {
         timestamp: new Date().toISOString(),
         students
     });
+
+    // console.log("Students retrieved successfully.");
+    // console.log("Student count: " + students.length);
 });
 
 // Get one student by ID
@@ -79,7 +91,11 @@ app.post("/students", (req, res) => {
     const { name, course, age } = req.body;
 
     // Check that all required fields are provided
-    if (!name || !name.trim() || !course || !course.trim() || age === undefined || age === null || age === "") {
+    const missingName = !name?.trim();
+    const missingCourse = !course?.trim();
+    const missingAge = age === undefined || age === null || age === "";
+
+    if (missingName || missingCourse || missingAge) {
         return res.status(400).json({
             message: "Name, course and age are required."
         });
@@ -198,8 +214,7 @@ app.use((err, req, res, next) => {
 });
 
 
-const port = process.env.port || 3000;
 
-app.listen(port, () => {
-    console.log(`Server running on ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on ${PORT}`);
 });
