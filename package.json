@@ -1,0 +1,29 @@
+{
+  "name": "student-record-api-group2c",
+  "version": "1.0.0",
+  "description": "Developing an API to manage a list of students. Implement endpoints to add, view, edit and remove students records.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node student-list-manager.js",
+    "dev": "nodemon student-list-manager.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasielKells/student-record-api-group2C.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JasielKells/student-record-api-group2C/issues"
+  },
+  "homepage": "https://github.com/JasielKells/student-record-api-group2C#readme",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
