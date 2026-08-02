@@ -187,7 +187,7 @@ app.put("/students/:id", (req, res) => {
 
     const ageNum = Number(age);
 
-    // Validate that age is a positive number
+    // Validate that age is a positive whole number
     if (!Number.isInteger(ageNum) || ageNum <= 0) {
         return res.status(400).json({
             message: "Age must be a positive number greater than zero."
@@ -195,8 +195,8 @@ app.put("/students/:id", (req, res) => {
     }
 
 
-    student.name = name;
-    student.course = course;
+    student.name = name.trim();
+    student.course = course.trim();
     student.age = ageNum;
 
     res.status(200).json({
