@@ -40,7 +40,7 @@ app.get("/students", (req, res) => {
         // Return an informative response instead of an empty array only
         return res.status(200).json({
             message: "No students found.",
-            count: 0,
+            count: students.length,
             timestamp: new Date().toISOString(),
             students
         });
@@ -122,7 +122,10 @@ app.post("/students", (req, res) => {
     students.push(student);
 
     // Return the created student with HTTP 201 (Created)
-    res.status(201).json(student);
+    res.status(201).json({
+        message: "Student created successfully.",
+        student
+    });
 });
 
 
@@ -141,7 +144,15 @@ app.patch("/students/:id", (req, res) => {
 
     if (name !== undefined) student.name = name;
     if (course !== undefined) student.course = course;
-    if (age !== undefined) student.age = age;
+    if (age !== undefined) {
+        const ageNum = Number(age);
+        if (!Number.isInteger(ageNum) || ageNum <= 0) {
+            return res.status(400).json({
+                message: "Age must be a positive number greater than zero."
+            });
+        }
+        student.age = ageNum;
+    }
 
     res.status(200).json({
         message: "Student updated successfully",
@@ -163,15 +174,30 @@ app.put("/students/:id", (req, res) => {
 
     const { name, course, age } = req.body;
 
-    if (!name || !course || age === undefined) {
+    // Check that all required fields are provided
+    const missingName = !name?.trim();
+    const missingCourse = !course?.trim();
+    const missingAge = age === undefined || age === null || age === "";
+
+    if (missingName || missingCourse || missingAge) {
         return res.status(400).json({
             message: "Name, course and age are required."
         });
     }
 
-    student.name = name;
-    student.course = course;
-    student.age = age;
+    const ageNum = Number(age);
+
+    // Validate that age is a positive whole number
+    if (!Number.isInteger(ageNum) || ageNum <= 0) {
+        return res.status(400).json({
+            message: "Age must be a positive number greater than zero."
+        });
+    }
+
+
+    student.name = name.trim();
+    student.course = course.trim();
+    student.age = ageNum;
 
     res.status(200).json({
         message: "Student updated successfully",
